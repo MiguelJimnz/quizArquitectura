@@ -1,5 +1,6 @@
 package com.example.quiz.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -8,18 +9,39 @@ import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 @Entity
 public class propietario {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_propietario;
     private String nombre;
     private String cedula;
     private LocalDate fecha_visita;
     private LocalTime hora_entrada;
 
+    @OneToMany(mappedBy = "propietario")
+    @JsonManagedReference //Este @ hace que no se referencien elementos entre sí, generando un ciclo de referencias
+    private List<reserva_zona> reservas;
+
+    @OneToMany(mappedBy = "propietario")
+    @JsonManagedReference
+    private List<reserva_parqueadero> reservasParqueadero;
+
+    @OneToMany(mappedBy = "propietario")
+    @JsonManagedReference
+    private List<visitante> visitantes;
+
+
+    public List<reserva_parqueadero> getReservasParqueadero() {
+        return reservasParqueadero;
+    }
+
+    public void setReservasParqueadero(List<reserva_parqueadero> reservasParqueadero) {
+        this.reservasParqueadero = reservasParqueadero;
+    }
 
     public propietario() {
     }

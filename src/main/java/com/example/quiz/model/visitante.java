@@ -1,20 +1,25 @@
 package com.example.quiz.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 public class visitante {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private  int id_visitante;
+    private int id_visitante;
+
     private String nombre;
     private String cedula;
     private String telefono;
     private String correo;
-    @OneToMany
+
+    @ManyToOne
     @JoinColumn(name = "id_propietario")
+    @JsonBackReference //En estos models, se usa este decorador, para señalar que de propietario tiene una relacion, pero que si en caso de que se genere un bucle de referencias, las maneje diferente, antes de esto, en postman se generaba un json enorme
     private propietario propietario;
 
 

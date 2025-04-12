@@ -1,6 +1,7 @@
 package com.example.quiz.model;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -19,7 +20,9 @@ public class reserva_zona {
 
     @ManyToOne
     @JoinColumn(name = "id_propietario")
+    @JsonBackReference
     private propietario propietario;
+
 
     public reserva_zona() {
     }
